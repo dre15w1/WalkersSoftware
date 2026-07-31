@@ -99,6 +99,25 @@
   .cs-row .k{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:4px}
   .cs-row .v{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.05rem;color:var(--ink)}
 
+
+  /* Expanded case studies */
+  .case-xl{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:border-color .3s}
+  .case-xl:hover{border-color:var(--teal-dim)}
+  .case-media{position:relative;width:100%;aspect-ratio:21/9;background-size:cover;background-position:center;border-bottom:1px solid var(--line)}
+  .case-appicon{position:absolute;left:40px;bottom:-28px;width:88px;height:88px;border-radius:20px;border:3px solid var(--panel);box-shadow:0 8px 32px rgba(0,0,0,.5)}
+  .case-body{padding:52px 48px 44px}
+  .case-body h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.9rem;letter-spacing:-0.02em;color:var(--ink);margin-bottom:8px}
+  .case-body>p{font-size:1rem;color:var(--ink-soft);max-width:820px;margin-bottom:32px}
+  .case-features{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-bottom:36px}
+  .cf{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:20px 22px}
+  .cf-k{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--teal);margin-bottom:8px;font-weight:500}
+  .cf-v{font-size:0.9rem;color:var(--ink-soft);line-height:1.55}
+  .case-statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden}
+  .cs2{background:var(--panel-2);padding:16px 18px}
+  .cs2 .k{font-family:'JetBrains Mono',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+  .cs2 .v{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:0.95rem;color:var(--ink)}
+  .case-caveat{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--ink-mute);letter-spacing:0.04em;line-height:1.6}
+
   /* PROCESS */
   #process{background:var(--bg-2);border-top:1px solid var(--line)}
   .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:64px;background:var(--line);border:1px solid var(--line);border-radius:8px;overflow:hidden}
@@ -146,6 +165,11 @@
     .svc-grid{grid-template-columns:1fr;margin-top:44px}
     .svc{padding:28px}
     .case{grid-template-columns:1fr;padding:32px;gap:28px}
+    .case-body{padding:40px 24px 32px}
+    .case-appicon{left:24px;width:64px;height:64px;bottom:-20px}
+    .case-features{grid-template-columns:1fr}
+    .case-statrow{grid-template-columns:1fr 1fr}
+
     .case-stats{border-left:none;border-top:1px solid var(--line-2);padding-left:0;padding-top:24px}
     .steps{grid-template-columns:1fr 1fr}
     .about-grid{grid-template-columns:1fr;gap:40px}
@@ -241,36 +265,94 @@
     <p class="sec-lead reveal">In-house builds across three verticals. When a studio ships for itself, you see exactly what it's capable of.</p>
 
     <div class="work-list">
-      <div class="case reveal">
-        <div>
+
+      <!-- CASE 1: THE GOOD BARBER -->
+      <div class="case-xl reveal">
+        <div class="case-media" style="background-image:url('images/goodbarber-banner.jpg')">
+          <img class="case-appicon" src="images/goodbarber-icon.jpg" alt="The Good Barber app icon" loading="lazy" />
+        </div>
+        <div class="case-body">
           <span class="case-badge badge-green">✱ Acquired</span>
           <h3>The Good Barber</h3>
-          <div class="case-type">FinTech Marketplace · iOS · Android · Web</div>
-          <p>A multi-platform fintech marketplace for the barbering industry — B2C and B2B payments, real-time scheduling, messaging, and shop resource management. Built by a remote team of five engineers through full product lifecycle, then successfully acquired.</p>
-        </div>
-        <div class="case-stats">
-          <div class="cs-row"><div class="k">Outcome</div><div class="v">Acquired (terms under NDA)</div></div>
-          <div class="cs-row"><div class="k">Platforms</div><div class="v">iOS · Android · Web</div></div>
-          <div class="cs-row"><div class="k">Team</div><div class="v">5 engineers, remote</div></div>
-          <div class="cs-row"><div class="k">Scope</div><div class="v">Payments · Booking · Ops</div></div>
+          <div class="case-type">Two-Sided FinTech Marketplace · iOS · Android · Web</div>
+          <p>A complete two-sided marketplace for the barbering industry — one app for clients, a second app for shop owners, and a web platform tying it together. Clients discover barbers, book appointments in real time, message their barber, and pay in-app. Shop owners manage chairs, schedules, staff, and revenue from the business app.</p>
+
+          <div class="case-features">
+            <div class="cf">
+              <div class="cf-k">Client App</div>
+              <div class="cf-v">Barber discovery, real-time booking, in-app payments, appointment history, messaging, reviews</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Business App</div>
+              <div class="cf-v">A dedicated second iOS app for shop owners — chair &amp; staff management, schedule control, revenue tracking</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Payments</div>
+              <div class="cf-v">Integrated B2C checkout and B2B shop-side payment flows with transaction history</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Architecture</div>
+              <div class="cf-v">4 codebases: native Swift iOS (client), native Android, native Swift iOS (business), PHP backend + web frontend</div>
+            </div>
+          </div>
+
+          <div class="case-statrow">
+            <div class="cs2"><div class="k">Outcome</div><div class="v">Acquired · NDA</div></div>
+            <div class="cs2"><div class="k">Codebases</div><div class="v">4 native + web</div></div>
+            <div class="cs2"><div class="k">Team</div><div class="v">5 engineers</div></div>
+            <div class="cs2"><div class="k">Role</div><div class="v">Founder-led build</div></div>
+          </div>
         </div>
       </div>
 
-      <div class="case reveal">
-        <div>
+      <!-- CASE 2: TRADING PLATFORM -->
+      <div class="case-xl reveal">
+        <div class="case-media" style="background-image:url('images/trading-desk.jpg')">
+        </div>
+        <div class="case-body">
           <span class="case-badge badge-blue">◆ Flagship</span>
           <h3>Automated Options Trading Platform</h3>
-          <div class="case-type">Quantitative Systems · Python</div>
-          <p>A self-hosted algorithmic trading system: 40,000+ lines of production Python integrating a live brokerage API with real-time WebSocket streaming, 19 hot-swappable strategy modules, Black-Scholes options pricing, structural risk management, an ML confirmation layer with nightly retraining, and a full web control plane. Validated through a research harness with Monte Carlo simulation and walk-forward testing.</p>
-        </div>
-        <div class="case-stats">
-          <div class="cs-row"><div class="k">Scale</div><div class="v">40,172 lines · 113 modules</div></div>
-          <div class="cs-row"><div class="k">Integration</div><div class="v">Live brokerage API · OAuth2</div></div>
-          <div class="cs-row"><div class="k">Forward Test</div><div class="v">166 trades · 1.56 profit factor</div></div>
-          <div class="cs-row"><div class="k">Stack</div><div class="v">Python · Flask · scikit-learn</div></div>
+          <div class="case-type">Quantitative Systems · Python · Live Brokerage Integration</div>
+          <p>A self-hosted algorithmic trading system that ingests real-time market data from a live brokerage, evaluates 19 independent strategies across multiple timeframes, prices and selects option contracts, sizes positions from risk limits, routes orders, and manages exits — with a full web control plane and a research harness that validates any strategy before it's allowed to trade.</p>
+
+          <div class="case-features">
+            <div class="cf">
+              <div class="cf-k">Market Data</div>
+              <div class="cf-v">Real-time WebSocket streaming, Level 2 order book depth, full option chains with live Greeks, 2.76M-row local bar cache with auto-backfill</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Strategy Engine</div>
+              <div class="cf-v">19 hot-swappable modules — market structure, smart-money concepts, volume profile, order flow — each signal emits a human-readable explanation of why it fired</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Risk Layer</div>
+              <div class="cf-v">Structural stops on the underlying, circuit breakers, drawdown tracking, signal cooldowns, earnings gating, account-level kill switch</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Control Plane</div>
+              <div class="cf-v">Flask dashboard — 15 templates, ~11.7K lines of UI, 168 runtime parameters, live P&amp;L, backtest runners, per-symbol analysis screens</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Machine Learning</div>
+              <div class="cf-v">Per-symbol adaptive models with nightly retraining; regime-conditioned variants; an AI layer that can veto or downsize signals</div>
+            </div>
+            <div class="cf">
+              <div class="cf-k">Validation</div>
+              <div class="cf-v">Event-driven backtester with execution-cost modeling, Monte Carlo simulation, bootstrap confidence intervals, walk-forward splits</div>
+            </div>
+          </div>
+
+          <div class="case-statrow">
+            <div class="cs2"><div class="k">Scale</div><div class="v">40,172 lines · 113 modules</div></div>
+            <div class="cs2"><div class="k">Forward Test</div><div class="v">166 trades · 1.56 PF</div></div>
+            <div class="cs2"><div class="k">Ops</div><div class="v">Discord alerts · watchdog</div></div>
+            <div class="cs2"><div class="k">Stack</div><div class="v">Python · Flask · sklearn</div></div>
+          </div>
+          <div class="case-caveat">Forward-test result on paper execution over 10 sessions; sample below 95% statistical confidence. Not a live track record.</div>
         </div>
       </div>
 
+      <!-- CASE 3: HEALTH OS -->
       <div class="case reveal">
         <div>
           <span class="case-badge badge-amber">● Live</span>
