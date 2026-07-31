@@ -100,6 +100,39 @@
   .cs-row .v{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:1.05rem;color:var(--ink)}
 
 
+
+  /* Case study modals */
+  .case-more{margin-top:28px;padding:13px 26px;background:transparent;border:1px solid var(--teal-dim);color:var(--teal);font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:0.9rem;border-radius:5px;cursor:pointer;transition:background .2s,color .2s}
+  .case-more:hover{background:var(--teal);color:var(--bg)}
+  .cmodal{position:fixed;inset:0;z-index:200;display:none;background:rgba(5,7,9,0.88)}
+  .cmodal.open{display:block}
+  .cmodal-panel{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch}
+  .cmodal-inner{max-width:960px;margin:60px auto;background:var(--bg-2);border:1px solid var(--line-2);border-radius:12px;overflow:hidden;position:relative}
+  .cmodal-close{position:sticky;top:0;z-index:5;display:flex;justify-content:flex-end;padding:0;background:transparent;pointer-events:none;height:0}
+  .cmodal-close button{pointer-events:auto;margin:16px 16px 0 0;width:44px;height:44px;border-radius:50%;background:rgba(11,14,17,0.85);border:1px solid var(--line-2);color:var(--ink);font-size:1.5rem;line-height:1;cursor:pointer;transition:border-color .2s,color .2s}
+  .cmodal-close button:hover{border-color:var(--teal);color:var(--teal)}
+  .cmodal-hero{width:100%;aspect-ratio:21/9;background-size:cover;background-position:center;border-bottom:1px solid var(--line)}
+  .cmodal-body{padding:48px}
+  .cmodal-body h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:2.2rem;letter-spacing:-0.02em;color:var(--ink);margin-bottom:8px}
+  .cmodal-sub{font-family:'JetBrains Mono',monospace;font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--teal);margin-bottom:28px}
+  .cmodal-body p{font-size:1.02rem;color:var(--ink-soft);margin-bottom:22px;max-width:780px}
+  .cmodal-h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:1.2rem;color:var(--ink);margin:36px 0 16px;padding-top:28px;border-top:1px solid var(--line)}
+  .cmodal-list{list-style:none;display:grid;gap:10px;margin-bottom:8px}
+  .cmodal-list li{font-size:0.95rem;color:var(--ink-soft);padding-left:22px;position:relative}
+  .cmodal-list li::before{content:'▸';position:absolute;left:0;color:var(--teal)}
+  .cmodal-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:8px}
+  .cmodal-shot{border:1px solid var(--line-2);border-radius:10px;overflow:hidden;background:var(--panel)}
+  .cmodal-shot img{width:100%;display:block}
+  .cmodal-shot .cap{font-family:'JetBrains Mono',monospace;font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink-mute);padding:10px 12px;border-top:1px solid var(--line)}
+  .cmodal-note{font-family:'JetBrains Mono',monospace;font-size:0.68rem;color:var(--ink-mute);letter-spacing:0.04em;line-height:1.6;margin-top:20px}
+  body.modal-open{overflow:hidden}
+  @media(max-width:700px){
+    .cmodal-inner{margin:0;border-radius:0;min-height:100vh}
+    .cmodal-body{padding:32px 20px}
+    .cmodal-gallery{grid-template-columns:1fr}
+    .cmodal-gallery .cmodal-shot img{max-height:70vh;object-fit:contain;background:#000}
+  }
+
   /* Expanded case studies */
   .case-xl{background:var(--panel);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:border-color .3s}
   .case-xl:hover{border-color:var(--teal-dim)}
@@ -302,6 +335,7 @@
             <div class="cs2"><div class="k">Team</div><div class="v">5 engineers</div></div>
             <div class="cs2"><div class="k">Role</div><div class="v">Founder-led build</div></div>
           </div>
+          <button class="case-more" data-modal="modal-gb">View Full Case Study →</button>
         </div>
       </div>
 
@@ -349,6 +383,7 @@
             <div class="cs2"><div class="k">Stack</div><div class="v">Python · Flask · sklearn</div></div>
           </div>
           <div class="case-caveat">Forward-test result on paper execution over 10 sessions; sample below 95% statistical confidence. Not a live track record.</div>
+          <button class="case-more" data-modal="modal-trade">View Full Case Study →</button>
         </div>
       </div>
 
@@ -359,6 +394,7 @@
           <h3>Personal Health OS</h3>
           <div class="case-type">Health &amp; Biometrics · PWA</div>
           <p>A browser-based health platform with four modules — supplement and compound scheduling with inventory-aware daily protocols, step-by-step skincare routines with automatic schedule variations, a multi-product hair-care protocol tracker, and live Apple Health integration surfacing blood pressure, HRV, SpO2, sleep, and weight. PIN-gated admin, full session persistence.</p>
+          <button class="case-more" data-modal="modal-health" style="margin-top:22px">View Full Case Study →</button>
         </div>
         <div class="case-stats">
           <div class="cs-row"><div class="k">Status</div><div class="v">Live in production</div></div>
@@ -476,6 +512,170 @@
       if (e.key === 'Escape') document.body.classList.remove('nav-open');
     });
   })();
+
+  // Case study modals
+  (function() {
+    const openers = document.querySelectorAll('[data-modal]');
+    openers.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const m = document.getElementById(btn.dataset.modal);
+        if (m) {
+          m.classList.add('open');
+          document.body.classList.add('modal-open');
+          m.querySelector('.cmodal-panel').scrollTop = 0;
+        }
+      });
+    });
+    document.querySelectorAll('.cmodal').forEach(m => {
+      m.addEventListener('click', e => {
+        // Close if clicking backdrop (panel itself) or elements marked data-close
+        if (e.target.hasAttribute('data-close') || e.target.classList.contains('cmodal-panel')) {
+          m.classList.remove('open');
+          document.body.classList.remove('modal-open');
+        }
+      });
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        document.querySelectorAll('.cmodal.open').forEach(m => m.classList.remove('open'));
+        document.body.classList.remove('modal-open');
+      }
+    });
+  })();
 </script>
+
+<!-- ===== CASE STUDY MODALS ===== -->
+<div class="cmodal" id="modal-gb" role="dialog" aria-modal="true">
+  <div class="cmodal-panel" data-close>
+    <div class="cmodal-inner">
+      <div class="cmodal-close"><button data-close aria-label="Close">&times;</button></div>
+      <div class="cmodal-hero" style="background-image:url('images/goodbarber-banner.jpg')"></div>
+      <div class="cmodal-body">
+        <h2>The Good Barber</h2>
+        <div class="cmodal-sub">Two-Sided FinTech Marketplace · Acquired</div>
+        <p>The Good Barber began with a simple observation: the barbering industry ran on cash, DMs, and no-shows. Clients had no reliable way to find, book, and pay a barber. Shop owners had no software built for how their business actually works — chairs, walk-ins, commission splits.</p>
+        <p>The answer was a complete two-sided marketplace: a client app for discovery, real-time booking, messaging, and in-app payment — and a dedicated second app for shop owners to run their chairs, staff, schedules, and revenue. A web platform and backend tied the two sides together.</p>
+
+        <div class="cmodal-h3">Product Screens</div>
+        <div class="cmodal-gallery">
+          <div class="cmodal-shot"><img src="images/gb-screen-1.jpg" alt="Good Barber app onboarding screen 1" loading="lazy"><div class="cap">Onboarding · Discovery</div></div>
+          <div class="cmodal-shot"><img src="images/gb-screen-2.jpg" alt="Good Barber app onboarding screen 2" loading="lazy"><div class="cap">Onboarding · Booking</div></div>
+          <div class="cmodal-shot"><img src="images/gb-screen-3.jpg" alt="Good Barber app onboarding screen 3" loading="lazy"><div class="cap">Onboarding · Payments</div></div>
+        </div>
+
+        <div class="cmodal-h3">What Was Built</div>
+        <ul class="cmodal-list">
+          <li><strong style="color:var(--ink)">Client iOS app (native Swift)</strong> — barber discovery, shop detail pages with maps, service selection, real-time booking, appointment history, in-app messaging, reviews, and payment checkout</li>
+          <li><strong style="color:var(--ink)">Business iOS app (native Swift)</strong> — a separate app for shop owners: booking management, accept/reject flows, client cards, schedule control, payment details, and revenue tracking</li>
+          <li><strong style="color:var(--ink)">Native Android app</strong> — full client experience on Android with feature parity</li>
+          <li><strong style="color:var(--ink)">PHP backend + web platform</strong> — APIs powering both apps, account management, OTP verification, referral system, and a public web presence</li>
+        </ul>
+
+        <div class="cmodal-h3">Under the Hood</div>
+        <ul class="cmodal-list">
+          <li>Two-sided payment architecture: B2C client checkout and B2B shop-side flows with transaction records</li>
+          <li>Real-time booking with confirm/cancel/pending state machines on both sides of the market</li>
+          <li>OTP phone verification, referral program, push notifications, in-app chat</li>
+          <li>Four coordinated codebases shipped by a founder-led remote team of five engineers</li>
+        </ul>
+
+        <div class="cmodal-h3">Outcome</div>
+        <p>The platform shipped to the App Store and Google Play, operated in market, and was <strong style="color:var(--teal)">successfully acquired</strong>. Terms remain confidential under NDA.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cmodal" id="modal-trade" role="dialog" aria-modal="true">
+  <div class="cmodal-panel" data-close>
+    <div class="cmodal-inner">
+      <div class="cmodal-close"><button data-close aria-label="Close">&times;</button></div>
+      <div class="cmodal-hero" style="background-image:url('images/trading-desk.jpg')"></div>
+      <div class="cmodal-body">
+        <h2>Automated Options Trading Platform</h2>
+        <div class="cmodal-sub">Quantitative Systems · 40,172 Lines · Live Brokerage</div>
+        <p>A self-hosted algorithmic trading system built to answer one question with engineering instead of hope: can a disciplined, risk-first framework trade options systematically? The platform ingests live market data, evaluates 19 independent strategies, prices and selects contracts, sizes positions from risk limits, routes orders, and manages exits — all governed by circuit breakers and validated by a research harness before any strategy is allowed to trade.</p>
+
+        <div class="cmodal-h3">Market Data &amp; Broker Integration</div>
+        <ul class="cmodal-list">
+          <li>Charles Schwab Trader API with OAuth2 and automatic token refresh</li>
+          <li>Real-time WebSocket streaming for equity quotes and option marks; Level 2 order-book depth multiplexed onto a single broker socket</li>
+          <li>Full option chains — bid/ask, volume, open interest, and live Greeks (delta, gamma, theta, vega, IV)</li>
+          <li>2.76M-row local bar cache with automatic backfill; rate-limit governor (90 req/min) with exponential backoff and failover</li>
+          <li>Data-quality gates: stale-quote rejection, crossed-book rejection, disconnect pause</li>
+        </ul>
+
+        <div class="cmodal-h3">Strategy Engine — 19 Modules</div>
+        <ul class="cmodal-list">
+          <li>Market structure: break of structure, change of character, fractal swing pivots with confirmed-pivot logic that prevents look-ahead</li>
+          <li>Smart-money concepts: fair value gaps, supply/demand zones, liquidity sweeps, order blocks</li>
+          <li>Volume profile: value area, point of control, high/low-volume nodes; order flow: cumulative delta, book imbalance, absorption</li>
+          <li>Multi-timeframe confluence and market-regime classification (trending, balanced, volatility states)</li>
+          <li>Every signal emits a human-readable explanation of why it fired</li>
+        </ul>
+
+        <div class="cmodal-h3">Risk Management</div>
+        <ul class="cmodal-list">
+          <li>Position sizing derived from the underlying invalidation level — never from available premium</li>
+          <li>Structural stops: exits trigger on the stock breaking structure, not on premium noise from spread or volatility</li>
+          <li>Circuit breaker with drawdown tracking and consecutive-loss limits; daily loss caps; account-level kill switch</li>
+          <li>Signal cooldowns, clearance checks against opposing levels, earnings-date gating, duplicate-order protection</li>
+        </ul>
+
+        <div class="cmodal-h3">Control Plane &amp; Operations</div>
+        <ul class="cmodal-list">
+          <li>Flask web dashboard — 15 templates, ~11.7K lines of UI, 168 runtime-configurable parameters</li>
+          <li>Live position monitoring with P&amp;L and equity curves; per-symbol analysis with charts, structure overlays, option chain, and Level 2 book</li>
+          <li>Watching panel showing tracked setups and the binding constraint holding each back; trading-halt banner surfacing circuit-breaker state</li>
+          <li>Discord notifications for entries, exits, breaker events, and subsystem health; shadow mode for validating strategies without trading</li>
+        </ul>
+
+        <div class="cmodal-h3">Machine Learning &amp; Validation</div>
+        <ul class="cmodal-list">
+          <li>Per-symbol adaptive models with nightly automated retraining; regime-conditioned variants</li>
+          <li>AI confirmation layer that can veto or downsize signals below a confidence threshold</li>
+          <li>Event-driven backtester with explicit cost modeling — spread, decay, commissions — and gap-aware fills</li>
+          <li>Monte Carlo simulation, bootstrap confidence intervals, walk-forward and out-of-sample splits, stress grids</li>
+        </ul>
+
+        <div class="cmodal-h3">Forward Test</div>
+        <p>Paper execution on live market data — real signals, real quotes, simulated fills — across 10 sessions: <strong style="color:var(--teal)">166 trades, +$3,953 net, 1.56 profit factor, 2.76× payoff ratio, 7 of 10 sessions green.</strong></p>
+        <div class="cmodal-note">Statistical caveats stated plainly: t-statistic 1.38 (below the ~2.0 threshold for 95% confidence); bootstrap 95% CI on profit factor spans 0.84–2.71; the single best session produced 69% of net profit. This is a forward-test record, not a live track record, and is not annualized.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cmodal" id="modal-health" role="dialog" aria-modal="true">
+  <div class="cmodal-panel" data-close>
+    <div class="cmodal-inner">
+      <div class="cmodal-close"><button data-close aria-label="Close">&times;</button></div>
+      <div class="cmodal-body" style="padding-top:64px">
+        <h2>Personal Health OS</h2>
+        <div class="cmodal-sub">Health &amp; Biometrics · PWA · Live in Production</div>
+        <p>A browser-based personal health operating system — one place to run daily wellness protocols that would otherwise live across notes apps, reminders, and memory. Built as a PWA, it works identically on mobile and desktop, persists every session, and adapts each day's schedule to what's actually in stock.</p>
+
+        <div class="cmodal-h3">The Four Modules</div>
+        <ul class="cmodal-list">
+          <li><strong style="color:var(--ink)">Supplement &amp; compound scheduling</strong> — daily protocol with timing, dosing guidance, compatibility rules, fasting requirements, site-rotation logging, and a PIN-locked admin panel with auto-calculated dosing for new entries</li>
+          <li><strong style="color:var(--ink)">Skincare</strong> — morning and evening routines as step-by-step checkoffs, automatic mask-night detection that swaps the routine on schedule, prescription refill tracking</li>
+          <li><strong style="color:var(--ink)">Hair protocol</strong> — a ten-product regimen tracker (Minoxidil, ketoconazole shampoo, dermaroller, rosemary oil, supplements and more), each with usage instructions, mechanism explanations, and day-of-week scheduling</li>
+          <li><strong style="color:var(--ink)">Health dashboard</strong> — live Apple Health integration surfacing blood pressure, heart rate, HRV, SpO2, sleep breakdown, weight, and steps; glucose logging with safety guidance; bloodwork tracking for key markers; daily supplement checkoffs</li>
+        </ul>
+
+        <div class="cmodal-h3">Engineering Details</div>
+        <ul class="cmodal-list">
+          <li>Inventory-aware scheduling: mark any item out of stock and it disappears from daily protocols automatically until restocked</li>
+          <li>Full session persistence — progress, history, and streaks survive every visit</li>
+          <li>PIN-gated admin surface for protocol modification</li>
+          <li>Hosted on Vercel; installable as a PWA on iOS and desktop</li>
+        </ul>
+
+        <div class="cmodal-note">UI screenshots coming soon.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
